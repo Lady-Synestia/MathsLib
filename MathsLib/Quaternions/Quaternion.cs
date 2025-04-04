@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace MathsLib
 {
@@ -11,23 +12,21 @@ namespace MathsLib
         public float x { get; }
         public float y { get; }
         public float z { get; }
+        
+        public float[] GetValues() => _values;
+        
+        private float[] _values;
 
         // constructor from real and vector parts
         public Quaternion(float w, (float x, float y, float z) tuple)
         {
-            this.w = w;
-            x = tuple.x;
-            y = tuple.y;
-            z = tuple.z;
+            _values = new[] { w, tuple.x, tuple.y, tuple.z };
         }
     
         // constructor for 0 real part
         public Quaternion(Vector3D v, float w=0)
         {
-            this.w = w;
-            x = v.x;
-            y = v.y;
-            z = v.z;
+            _values = (new[] { w }).Concat(v.GetValues()).ToArray();
         }
 
         // constructor from angle and axis parts
@@ -36,10 +35,10 @@ namespace MathsLib
             axis = axis.Normalised;
             angle *= Maths.Radians;
             float halfAngle = angle * 0.5f;
-            w = MathF.Cos(halfAngle);
-            x = axis.x * MathF.Sin(halfAngle);
-            y = axis.y * MathF.Sin(halfAngle);
-            z = axis.z * MathF.Sin(halfAngle);
+            _values[0] = MathF.Cos(halfAngle);
+            _values[0] = axis.x * MathF.Sin(halfAngle);
+            _values[0] = axis.y * MathF.Sin(halfAngle);
+            _values[0] = axis.z * MathF.Sin(halfAngle);
         }
 
         // constructor from euler angles

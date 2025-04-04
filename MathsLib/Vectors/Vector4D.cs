@@ -4,10 +4,14 @@ namespace MathsLib
 {
     public sealed partial record Vector4D
     {
-        public float x { get; }
-        public float y { get; }
-        public float z { get; }
-        public float w { get; }
+        public float x => _values[0];
+        public float y => _values[1];
+        public float z => _values[2];
+        public float w => _values[3];
+        
+        public float[] GetValues() => _values;
+
+        private float[] _values;
 
         /*public Vector4D(Vector4D a) : this (
             a.x,
@@ -21,12 +25,9 @@ namespace MathsLib
             a.z,
             w) { }
 
-        public Vector4D(float X, float Y, float Z, float W)
+        public Vector4D(float x, float y, float z, float w)
         {
-            x = X;
-            y = Y;
-            z = Z;
-            w = W;
+            _values = new [] { x, y, z, w };
         }
 
         public (float x, float y, float z, float w) Tuple => (x, y, z, w);
@@ -40,14 +41,7 @@ namespace MathsLib
 
         public override string ToString() =>
             $"{MathF.Round(x, 4)}, {MathF.Round(y, 4)}, {MathF.Round(z, 4)}, {MathF.Round(w, 4)}";
-
-        public void Deconstruct(out float x, out float y, out float z, out float w)
-        {
-            x = this.x;
-            y = this.y;
-            z = this.z;
-            w = this.w;
-        }
+        
     }
 
 

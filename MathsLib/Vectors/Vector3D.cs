@@ -2,11 +2,20 @@
 
 namespace MathsLib
 {
-    public sealed partial record Vector3D(float x, float y, float z)
+    public sealed partial record Vector3D
     {
-        public float x { get; } = x;
-        public float y { get; } = y;
-        public float z { get; } = z;
+        public float x => _values[0];
+        public float y => _values[1];
+        public float z => _values[2];
+
+        public float[] GetValues() => _values;
+        
+        private float[] _values;
+
+        public Vector3D(float x, float y, float z)
+        {
+            _values = new[] { x, y, z };
+        }
 
         // copy constructor
         //public Vector3D(Vector3D a) : this (a.x, a.y, a.z) { }
