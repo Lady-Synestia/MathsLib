@@ -35,10 +35,13 @@ namespace MathsLib
             axis = axis.Normalised;
             angle *= Maths.Radians;
             float halfAngle = angle * 0.5f;
-            _values[0] = MathF.Cos(halfAngle);
-            _values[0] = axis.x * MathF.Sin(halfAngle);
-            _values[0] = axis.y * MathF.Sin(halfAngle);
-            _values[0] = axis.z * MathF.Sin(halfAngle);
+            _values = new[]
+            {
+                MathF.Cos(halfAngle),
+                axis.x * MathF.Sin(halfAngle),
+                axis.y * MathF.Sin(halfAngle),
+                axis.z * MathF.Sin(halfAngle)
+            };
         }
 
         // constructor from euler angles
@@ -47,11 +50,13 @@ namespace MathsLib
             float magnitude = angles.Magnitude;
             angles *= Maths.Radians;
             Vector3D normalised = angles.Normalised;
-
-            w = MathF.Cos(magnitude / 2);
-            x = MathF.Sin(magnitude / 2) * normalised.x;
-            y = MathF.Sin(magnitude / 2) * normalised.y;
-            z = MathF.Sin(magnitude / 2) * normalised.z;
+            _values = new[]
+                {
+                    MathF.Cos(magnitude / 2),
+                    MathF.Sin(magnitude / 2) * normalised.x,
+                    MathF.Sin(magnitude / 2) * normalised.y,
+                    MathF.Sin(magnitude / 2) * normalised.z
+                };
         }
 
         // constructor from rotation matrix
@@ -65,34 +70,46 @@ namespace MathsLib
             if (trace > Maths.Tolerance)
             {
                 float s = MathF.Sqrt(trace) * 2;
-                w = 0.25f * s;
-                x = (mat.R.y - mat.U.z) / s;
-                y = (mat.F.z - mat.R.x) / s;
-                z = (mat.U.x - mat.F.y) / s;
+                _values = new[]
+                {
+                    0.25f * s,
+                    (mat.R.y - mat.U.z) / s,
+                    (mat.F.z - mat.R.x) / s,
+                    (mat.U.x - mat.F.y) / s
+                };
             }
             else if (mat.F.x - mat.U.y > Maths.Tolerance && mat.F.x - mat.R.z > Maths.Tolerance)
             {
                 float s = MathF.Sqrt(1.0f + mat.F.x - mat.U.y - mat.R.z) * 2;
-                w = (mat.R.y - mat.U.z) / s;
-                x = 0.25f * s;
-                y = (mat.F.z + mat.R.x) / s;
-                z = (mat.U.x + mat.U.y) / s;
+                _values = new[]
+                {
+                    (mat.R.y - mat.U.z) / s,
+                    0.25f * s,
+                    (mat.F.z + mat.R.x) / s,
+                    (mat.U.x + mat.U.y) / s
+                };
             }
             else if (mat.U.y - mat.R.z > Maths.Tolerance)
             {
                 float s = MathF.Sqrt(1.0f + mat.U.y - mat.F.x - mat.R.z) * 2;
-                w = (mat.U.z - mat.R.x) / s;
-                x = (mat.U.x + mat.F.y) / s;
-                y = 0.25f * s;
-                z = (mat.R.y + mat.U.z) / s;
+                _values = new[]
+                {
+                    (mat.U.z - mat.R.x) / s,
+                    (mat.U.x + mat.F.y) / s,
+                    0.25f * s,
+                    (mat.R.y + mat.U.z) / s
+                };
             }
             else
             {
                 float s = MathF.Sqrt(1.0f + mat.R.z - mat.F.x - mat.U.y) * 2;
-                w = (mat.U.x - mat.F.y) / s;
-                x = (mat.F.z + mat.R.x) / s;
-                y = (mat.R.y + mat.U.z) / s;
-                z = 0.25f * s;
+                _values = new[]
+                {
+                    (mat.U.x - mat.F.y) / s,
+                    (mat.F.z + mat.R.x) / s,
+                    (mat.R.y + mat.U.z) / s,
+                    0.25f * s
+                };
             }
         }
 
