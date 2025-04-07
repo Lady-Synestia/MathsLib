@@ -7,7 +7,7 @@ using MathsLib;
 Console.WriteLine("Hello World!");
 
 
-float delta = 0.0002f;
+/*float delta = 0.0002f;
 
 Vector3D[] vertices = [new(0, 0, 0), new(1, 0, 0), new(0, 1, 0),new(0, 0, 1),new(1, 1, 0),new(1, 0, 1),new(0, 1, 1),new(1, 1, 1), new(0, 0, 0), new(1, 0, 0), new(0, 1, 0),new(0, 0, 1),new(1, 1, 0),new(1, 0, 1),new(0, 1, 1),new(1, 1, 1)];
 Quaternion rotation = new(0, Vector3D.Z);
@@ -17,7 +17,7 @@ float spinAngle = 0;
 Vector3D spinAxis = new (1, 0.25f, 0.75f);
 float orbitAngle = 0;
 float orbitDistance = 15;
-Vector3D orbitAxis = new(0.5f, 0.5f, 0);
+Vector3D orbitAxis = new (0.5f, 0.5f, 0);
 
 
 while (true)
@@ -49,4 +49,32 @@ while (true)
 
     vertices = transformedVertices;
 
+}*/
+
+float theta = 0;
+
+
+Vector4D v = new(1, 0, 0, 1);
+Console.WriteLine(v);
+
+Matrix4D T = Matrix4D.Translation(new Vector3D(0, 0, 0));
+//Console.WriteLine(T);
+
+
+//Console.WriteLine(R);
+
+Matrix4D S = Matrix4D.Scale(new Vector3D(1, 1, 1));
+//Console.WriteLine(S);
+
+
+
+while (theta < 360)
+{
+    Matrix4D R = Matrix4D.Rotation(theta, Vector3D.Z);
+    //Console.WriteLine(R);
+    Matrix4D TRS = Matrix4D.TRS(T, R, S);
+    //Console.WriteLine(TRS);
+    Vector3D r = TRS * v;
+    Console.WriteLine($"{r}\n{r.Magnitude}\n");
+    theta += 30;
 }

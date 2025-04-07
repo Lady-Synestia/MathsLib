@@ -58,9 +58,9 @@ namespace MathsLib
             1
         ); */
         public static Vector3D operator *(Matrix4D m, Vector3D v) => new(
-            m.F.x * v.x + m.U.x * v.y + m.R.x * v.z,
-            m.F.y * v.x + m.U.y * v.y + m.R.y * v.z,
-            m.F.z * v.x + m.U.z * v.y + m.R.z * v.z
+            m.F.x * v.x + m.U.x * v.y + m.R.x * v.z + m.W.x,
+            m.F.y * v.x + m.U.y * v.y + m.R.y * v.z + m.W.y,
+            m.F.z * v.x + m.U.z * v.y + m.R.z * v.z + m.W.z
         );
 
         /*public static Matrix4D operator *(Matrix4D a, Matrix4D b)
