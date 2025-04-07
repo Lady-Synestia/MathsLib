@@ -44,10 +44,10 @@ namespace MathsLib
         // matrix multiplication is equal to taking the dot product between the transpose of the LHS and the RHS
         //public static Vector4D operator *(Matrix4D m, Vector4D v) => m.Transpose.MultiplyTransposed(v);
         public static Vector4D operator *(Matrix4D m, Vector4D v) => new(
-             m.F.x * v.x + m.U.x * v.y + m.R.x * v.z + m.W.x * v.w,
-             m.F.y * v.x + m.U.y * v.y + m.R.y * v.z + m.W.y * v.w,
-             m.F.z * v.x + m.U.z * v.y + m.R.z * v.z + m.W.z * v.w, 
-             m.F.w * v.x + m.U.w * v.y + m.R.w * v.z + m.W.w * v.w
+              m.F.x * v.x + m.U.x * v.x + m.R.x * v.x + m.W.x * v.x,
+              m.F.y * v.y + m.U.y * v.y + m.R.y * v.y + m.W.y * v.y,
+              m.F.z * v.z + m.U.z * v.z + m.R.z * v.z + m.W.z * v.z, 
+             m.F.w * v.w + m.U.w * v.w + m.R.w * v.w + m.W.w * v.w
         );
 
         //public static Vector4D operator *(Matrix4D m, Vector3D v) => m.Transpose.MultiplyTransposed(new Vector4D(v));
@@ -58,9 +58,9 @@ namespace MathsLib
             1
         ); */
         public static Vector3D operator *(Matrix4D m, Vector3D v) => new(
-            m.F.x * v.x + m.U.x * v.y + m.R.x * v.z,
-            m.F.y * v.x + m.U.y * v.y + m.R.y * v.z,
-            m.F.z * v.x + m.U.z * v.y + m.R.z * v.z
+            m.F.x * v.x + m.U.x * v.x + m.R.x * v.x,
+            m.F.y * v.y + m.U.y * v.y + m.R.y * v.y,
+            m.F.z * v.z + m.U.z * v.z + m.R.z * v.z
         );
 
         /*public static Matrix4D operator *(Matrix4D a, Matrix4D b)
