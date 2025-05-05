@@ -26,8 +26,9 @@ namespace MathsLib
             0);
 
 
-        public override string ToString() => $"{MathF.Round(x, 4)}, {MathF.Round(y, 4)}, {MathF.Round(z, 4)}";
-
+        public string ToString(int digits) => $"{x.ToString(digits)}, {y.ToString(digits)}, {z.ToString(digits)}";
+        public override string ToString() => $"{x}, {y}, {z}";
+        
         // return values as tuple
         public (float x, float y, float z) Tuple => (x, y, z);
     }

@@ -51,11 +51,12 @@ while (true)
 
 }*/
 
+/*
 float theta = 0;
 
 
 Vector4D v = new(1, 0, 0, 1);
-Console.WriteLine(v);
+//Console.WriteLine(v);
 
 Matrix4D T = Matrix4D.Translation(new Vector3D(0, 0, 0));
 //Console.WriteLine(T);
@@ -78,3 +79,10 @@ while (theta < 360)
     Console.WriteLine($"{r}\n{r.Magnitude}\n");
     theta += 30;
 }
+*/
+
+Console.WriteLine(new Vector3D(1, 0, -1));
+Console.WriteLine(new Vector3D(0.1f, -0.1f, 4214));
+Console.WriteLine(new Vector3D(739.29472f, 0.0876284f, 324.23f));
+Console.WriteLine(new Vector3D(3.8299e20f, 9.3829e-10f, 5.392939282e12f));
+Console.WriteLine(new Vector3D(3.29438292e-14f, 0, 0));

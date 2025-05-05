@@ -38,8 +38,8 @@ namespace MathsLib
             v.z,
             0);
 
-        public override string ToString() =>
-            $"{MathF.Round(x, 4)}, {MathF.Round(y, 4)}, {MathF.Round(z, 4)}, {MathF.Round(w, 4)}";
+        public string ToString(int digits) => $"{x.ToString(digits)}, {y.ToString(digits)}, {z.ToString(digits)}, {w.ToString(digits)}";
+        public override string ToString() => $"{x}, {y}, {z}, {w}";
 
         public void Deconstruct(out float x, out float y, out float z, out float w)
         {
