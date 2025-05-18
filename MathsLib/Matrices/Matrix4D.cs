@@ -177,7 +177,7 @@ namespace MathsLib
         /// <param name="scaleY">Y scale factor</param>
         /// <param name="scaleZ">Z scale factor</param>
         /// <returns></returns>
-        public static Matrix4D Scale(float scaleX, float scaleY, float scaleZ) => new(
+        public static Matrix4D Scale(double scaleX, double scaleY, double scaleZ) => new(
             new Vector3D(scaleX, 0, 0),
             new Vector3D(0, scaleY, 0),
             new Vector3D(0, 0, scaleZ));
@@ -198,7 +198,7 @@ namespace MathsLib
         /// </summary>
         /// <param name="scale">scale factor</param>
         /// <returns></returns>
-        public static Matrix4D Scale(float scale) => new(
+        public static Matrix4D Scale(double scale) => new(
             new Vector3D(scale, 0, 0),
             new Vector3D(0, scale, 0),
             new Vector3D(0, 0, scale)
@@ -292,28 +292,28 @@ namespace MathsLib
              * Maths for calculation from the OpenGL FAQ on Matrices and Quaternions, Question 37 (Various., n.d.)
              */
 
-            float angleX;
-            float angleZ;
-            float angleY = MathF.Asin(F.z);
-            float c = MathF.Cos(angleY);
+            double angleX;
+            double angleZ;
+            double angleY = Math.Asin(F.z);
+            double c = Math.Cos(angleY);
             angleY *= Maths.Radians;
 
-            if (MathF.Abs(angleY) > 0.005f)
+            if (Math.Abs(angleY) > 0.005f)
             {
-                float trX = R.z / c;
-                float trY = -U.z / c;
-                angleX = MathF.Atan2(trY, trX) * (180 / MathF.PI);
+                double trX = R.z / c;
+                double trY = -U.z / c;
+                angleX = Math.Atan2(trY, trX) * (180 / Math.PI);
 
                 trX = F.x / c;
                 trY = -F.y / c;
-                angleZ = MathF.Atan2(trY, trX) * (180 / MathF.PI);
+                angleZ = Math.Atan2(trY, trX) * (180 / Math.PI);
             }
             else
             {
                 angleX = 0;
-                float trX = U.y;
-                float trY = U.x;
-                angleZ = MathF.Atan2(trY, trX) * (180 / MathF.PI);
+                double trX = U.y;
+                double trY = U.x;
+                angleZ = Math.Atan2(trY, trX) * (180 / Math.PI);
             }
 
             if (angleX < 0)
@@ -356,15 +356,15 @@ namespace MathsLib
 
             angles *= Maths.Radians;
 
-            float cosX = MathF.Cos(angles.x);
-            float sinX = MathF.Sin(angles.x);
-            float cosY = MathF.Cos(angles.y);
-            float sinY = MathF.Sin(angles.y);
-            float cosZ = MathF.Cos(angles.z);
-            float sinZ = MathF.Sin(angles.z);
+            double cosX = Math.Cos(angles.x);
+            double sinX = Math.Sin(angles.x);
+            double cosY = Math.Cos(angles.y);
+            double sinY = Math.Sin(angles.y);
+            double cosZ = Math.Cos(angles.z);
+            double sinZ = Math.Sin(angles.z);
 
-            float cosXsinY = cosX * sinY;
-            float sinXsinY = sinX * sinY;
+            double cosXsinY = cosX * sinY;
+            double sinXsinY = sinX * sinY;
 
             /*
              original code was incorrect as the example matrix was transposed
@@ -396,17 +396,17 @@ namespace MathsLib
 
             //quaternion = quaternion.Normalised;
 
-            float xx = Q.x * Q.x;
-            float xy = Q.x * Q.y;
-            float xz = Q.x * Q.z;
-            float xw = Q.x * Q.w;
+            double xx = Q.x * Q.x;
+            double xy = Q.x * Q.y;
+            double xz = Q.x * Q.z;
+            double xw = Q.x * Q.w;
 
-            float yy = Q.y * Q.y;
-            float yz = Q.y * Q.z;
-            float yw = Q.y * Q.w;
+            double yy = Q.y * Q.y;
+            double yz = Q.y * Q.z;
+            double yw = Q.y * Q.w;
 
-            float zz = Q.z * Q.z;
-            float zw = Q.z * Q.w;
+            double zz = Q.z * Q.z;
+            double zw = Q.z * Q.w;
 
             return new Matrix4D(
                 new Vector4D(1 - 2 * (yy + zz), 2 * (xy - zw), 2 * (xz + yw), 0),
@@ -422,7 +422,7 @@ namespace MathsLib
         /// <param name="theta">angle</param>
         /// <param name="axis">axis of rotation</param>
         /// <returns></returns>
-        public static Matrix4D Rotation(float theta, Vector3D axis)
+        public static Matrix4D Rotation(double theta, Vector3D axis)
         {
             /*
              * Maths for calculation from the OpenGL FAQ on Matrices and Quaternions, Question 38 (Various., n.d.)
@@ -431,8 +431,8 @@ namespace MathsLib
             axis = axis.Normalised;
             theta *= Maths.Radians;
 
-            float cosTheta = MathF.Cos(theta);
-            float sinTheta = MathF.Sin(theta);
+            double cosTheta = Math.Cos(theta);
+            double sinTheta = Math.Sin(theta);
 
             return new Matrix4D(
                 new Vector4D(cosTheta + axis.x * axis.x * (1 - cosTheta),

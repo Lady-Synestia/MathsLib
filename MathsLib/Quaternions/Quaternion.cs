@@ -10,22 +10,22 @@ namespace MathsLib
         /// <summary>
         /// w (real) component
         /// </summary>
-        public float w { get; }
+        public double w { get; }
         
         /// <summary>
         /// coefficient of i in vector component
         /// </summary>
-        public float x { get; }
+        public double x { get; }
         
         /// <summary>
         /// coefficient of j in vector component
         /// </summary>
-        public float y { get; }
+        public double y { get; }
         
         /// <summary>
         /// coefficient of k in vector component
         /// </summary>
-        public float z { get; }
+        public double z { get; }
 
         /// <summary>
         /// Constructor from real and vector parts.
@@ -33,7 +33,7 @@ namespace MathsLib
         /// </summary>
         /// <param name="w">Real part</param>
         /// <param name="tuple">Vector part</param>
-        public Quaternion(float w, (float x, float y, float z) tuple)
+        public Quaternion(double w, (double x, double y, double z) tuple)
         {
             this.w = w;
             x = tuple.x;
@@ -41,7 +41,7 @@ namespace MathsLib
             z = tuple.z;
         }
         
-        /*public Quaternion(Vector3D v, float w=0)
+        /*public Quaternion(Vector3D v, double w=0)
         {
             this.w = w;
             x = v.x;
@@ -54,15 +54,15 @@ namespace MathsLib
         /// </summary>
         /// <param name="angle">angle in degrees</param>
         /// <param name="axis">Does not need to be normalised</param>
-        public Quaternion(float angle, Vector3D axis)
+        public Quaternion(double angle, Vector3D axis)
         {
             axis = axis.Normalised;
             angle *= Maths.Radians;
-            float halfAngle = angle * 0.5f;
-            w = MathF.Cos(halfAngle);
-            x = axis.x * MathF.Sin(halfAngle);
-            y = axis.y * MathF.Sin(halfAngle);
-            z = axis.z * MathF.Sin(halfAngle);
+            double halfAngle = angle * 0.5f;
+            w = Math.Cos(halfAngle);
+            x = axis.x * Math.Sin(halfAngle);
+            y = axis.y * Math.Sin(halfAngle);
+            z = axis.z * Math.Sin(halfAngle);
         }
 
         /// <summary>
@@ -71,14 +71,14 @@ namespace MathsLib
         /// <param name="angles">3D Vector representation of Euler Angles</param>
         public Quaternion(Vector3D angles)
         {
-            float magnitude = angles.Magnitude;
+            double magnitude = angles.Magnitude;
             angles *= Maths.Radians;
             Vector3D normalised = angles.Normalised;
 
-            w = MathF.Cos(magnitude / 2);
-            x = MathF.Sin(magnitude / 2) * normalised.x;
-            y = MathF.Sin(magnitude / 2) * normalised.y;
-            z = MathF.Sin(magnitude / 2) * normalised.z;
+            w = Math.Cos(magnitude / 2);
+            x = Math.Sin(magnitude / 2) * normalised.x;
+            y = Math.Sin(magnitude / 2) * normalised.y;
+            z = Math.Sin(magnitude / 2) * normalised.z;
         }
 
         /// <summary>
@@ -91,10 +91,10 @@ namespace MathsLib
              * Maths for calculation from the OpenGL FAQ on Matrices and Quaternions, Question 55 (Various., n.d.)
              */
 
-            float trace = 1 + mat.F.x + mat.U.y + mat.R.z;
+            double trace = 1 + mat.F.x + mat.U.y + mat.R.z;
             if (trace > Maths.Tolerance)
             {
-                float s = MathF.Sqrt(trace) * 2;
+                double s = Math.Sqrt(trace) * 2;
                 w = 0.25f * s;
                 x = (mat.R.y - mat.U.z) / s;
                 y = (mat.F.z - mat.R.x) / s;
@@ -102,7 +102,7 @@ namespace MathsLib
             }
             else if (mat.F.x - mat.U.y > Maths.Tolerance && mat.F.x - mat.R.z > Maths.Tolerance)
             {
-                float s = MathF.Sqrt(1.0f + mat.F.x - mat.U.y - mat.R.z) * 2;
+                double s = Math.Sqrt(1.0f + mat.F.x - mat.U.y - mat.R.z) * 2;
                 w = (mat.R.y - mat.U.z) / s;
                 x = 0.25f * s;
                 y = (mat.F.z + mat.R.x) / s;
@@ -110,7 +110,7 @@ namespace MathsLib
             }
             else if (mat.U.y - mat.R.z > Maths.Tolerance)
             {
-                float s = MathF.Sqrt(1.0f + mat.U.y - mat.F.x - mat.R.z) * 2;
+                double s = Math.Sqrt(1.0f + mat.U.y - mat.F.x - mat.R.z) * 2;
                 w = (mat.U.z - mat.R.x) / s;
                 x = (mat.U.x + mat.F.y) / s;
                 y = 0.25f * s;
@@ -118,7 +118,7 @@ namespace MathsLib
             }
             else
             {
-                float s = MathF.Sqrt(1.0f + mat.R.z - mat.F.x - mat.U.y) * 2;
+                double s = Math.Sqrt(1.0f + mat.R.z - mat.F.x - mat.U.y) * 2;
                 w = (mat.U.x - mat.F.y) / s;
                 x = (mat.F.z + mat.R.x) / s;
                 y = (mat.R.y + mat.U.z) / s;
@@ -166,7 +166,7 @@ namespace MathsLib
         /// <summary>
         /// Quaternion Magnitude
         /// </summary>
-        public float Magnitude => MathF.Sqrt(w*w + x*x + y*y + z*z);
+        public double Magnitude => Math.Sqrt(w*w + x*x + y*y + z*z);
     
         /// <summary>
         /// Normalised Quaternion. Quaternions should always be normalised
@@ -180,17 +180,17 @@ namespace MathsLib
         /// <param name="a">lhs</param>
         /// <param name="b">rhs</param>
         /// <returns></returns>
-        public static float Dot(Quaternion a, Quaternion b) => a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+        public static double Dot(Quaternion a, Quaternion b) => a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
         
         
         /// <summary>
         /// Calculates angle-axis representation from Quaternion
         /// </summary>
         /// <returns>angle (in degrees) and axis</returns>
-        public (float angle, Vector3D axis) AxisAngle()
+        public (double angle, Vector3D axis) AxisAngle()
         {
-            float halfAngle = MathF.Acos(w);
-            float sinH = MathF.Sin(halfAngle);
+            double halfAngle = Math.Acos(w);
+            double sinH = Math.Sin(halfAngle);
             Vector3D axis = new (
                 x / sinH, 
                 y / sinH, 
@@ -207,14 +207,14 @@ namespace MathsLib
         {
            return $"{w.ToString(digits)} {format(x)}i + {format(y)}j + {format(z)}k"; 
            
-           string format(float value) => Maths.sign(value) + MathF.Abs(value).ToString(digits);
+           string format(double value) => Maths.sign(value) + Math.Abs(value).ToString(digits);
         } 
         
         public override string ToString()
         {
            return $"{w.ToString()} {format(x)}i + {format(y)}j + {format(z)}k"; 
            
-           string format(float value) => Maths.sign(value) + MathF.Abs(value).ToString();
+           string format(double value) => Maths.sign(value) + Math.Abs(value).ToString();
         } 
         //public override string ToString() => $"{w} + {x}i + {y}j + {z}k";
         
@@ -234,10 +234,10 @@ namespace MathsLib
         /// <param name="b">Ending Quaternion</param>
         /// <param name="t">fraction of rotation</param>
         /// <returns></returns>
-        public static Quaternion Slerp(Quaternion a, Quaternion b, float t)
+        public static Quaternion Slerp(Quaternion a, Quaternion b, double t)
         {
             Quaternion d = b * a.Inverse;
-            (float angle, Vector3D axis) = d.AxisAngle();
+            (double angle, Vector3D axis) = d.AxisAngle();
             return new Quaternion(t * angle, axis);
         }
     }

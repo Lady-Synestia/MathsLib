@@ -4,21 +4,21 @@ namespace MathsLib
 {
     public class BoundingCapsule
     {
-        public BoundingCapsule(Vector3D centre1, Vector3D centre2, float radius)
+        public BoundingCapsule(Vector3D centre1, Vector3D centre2, double radius)
         {
             Radius = radius;
             Centre1 = centre1;
             Centre2 = centre2;
         }
-        public float Radius { get;}
+        public double Radius { get;}
         public Vector3D Centre1 { get; }
         public Vector3D Centre2 { get; }
-        public float Height => Vector3D.Distance(Centre1, Centre2) + (2 * Radius);
+        public double Height => Vector3D.Distance(Centre1, Centre2) + (2 * Radius);
 
         public override string ToString() => $"r: {Radius}, c1: {Centre1}, c2: {Centre2}";
         public bool SphereIntersect(BoundingSphere other)
         {
-            float distanceSquared;
+            double distanceSquared;
         
             if (Vector3D.Dot(Centre1, other.Centre) < 0)
             {
@@ -34,12 +34,12 @@ namespace MathsLib
                 Vector3D AC = Centre1.To(other.Centre);
                 Vector3D BC = Centre2.To(other.Centre);
 
-                float ACdotAB = Vector3D.Dot(AB, AC);
+                double ACdotAB = Vector3D.Dot(AB, AC);
             
                 distanceSquared = AC.SqrMagnitude - ACdotAB * ACdotAB / AB.SqrMagnitude;
             }
 
-            float radii = Radius + other.Radius;
+            double radii = Radius + other.Radius;
             return distanceSquared <= radii * radii;
         }
 
@@ -66,7 +66,7 @@ namespace MathsLib
             Vector3D a = other.Centre1 - Centre1;
             Vector3D b = Vector3D.Cross(d1, d2);
         
-            float distance = MathF.Abs(Vector3D.Dot(a, b)/b.Magnitude);
+            double distance = Math.Abs(Vector3D.Dot(a, b)/b.Magnitude);
         
             return distance < Radius + other.Radius;
         }
