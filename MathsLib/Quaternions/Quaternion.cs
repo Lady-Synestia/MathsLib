@@ -52,7 +52,7 @@ namespace MathsLib
         /// <summary>
         /// Constructor from angle and axis parts
         /// </summary>
-        /// <param name="angle"></param>
+        /// <param name="angle">angle in degrees</param>
         /// <param name="axis">Does not need to be normalised</param>
         public Quaternion(float angle, Vector3D axis)
         {
@@ -88,7 +88,7 @@ namespace MathsLib
         public Quaternion(Matrix4D mat)
         {
             /*
-             * Maths for calculation from: https://www.opengl-tutorial.org/assets/faq_quaternions/index.html#Q55
+             * Maths for calculation from the OpenGL FAQ on Matrices and Quaternions, Question 55 (Various., n.d.)
              */
 
             float trace = 1 + mat.F.x + mat.U.y + mat.R.z;
@@ -173,11 +173,20 @@ namespace MathsLib
         /// </summary>
         public Quaternion Normalised => new (w/Magnitude, (x/Magnitude, y/Magnitude, z/Magnitude));
     
-    
+        /// <summary>
+        /// Quaternion Dot Product.
+        /// The same as normal 4D Dot Product
+        /// </summary>
+        /// <param name="a">lhs</param>
+        /// <param name="b">rhs</param>
+        /// <returns></returns>
+        public static float Dot(Quaternion a, Quaternion b) => a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+        
+        
         /// <summary>
         /// Calculates angle-axis representation from Quaternion
         /// </summary>
-        /// <returns>angle and axis</returns>
+        /// <returns>angle (in degrees) and axis</returns>
         public (float angle, Vector3D axis) AxisAngle()
         {
             float halfAngle = MathF.Acos(w);
@@ -216,7 +225,8 @@ namespace MathsLib
         /// <param name="p">vector to rotate</param>
         /// <returns></returns>
         public static Vector3D Rotate(Quaternion q, Vector3D p) => (q * new Quaternion(p) * q.Inverse).v;
-
+        
+        
         /// <summary>
         /// Spherically interpolates one quaternion to another
         /// </summary>
@@ -227,25 +237,8 @@ namespace MathsLib
         public static Quaternion Slerp(Quaternion a, Quaternion b, float t)
         {
             Quaternion d = b * a.Inverse;
-            float wt = MathF.Cos(t * MathF.Acos(d.w));
-            Vector3D vt = (d.v / MathF.Acos(d.w)) * MathF.Sin(t * MathF.Acos(d.w));
-            Quaternion dt = new(wt, vt);
-            return dt * a;
-        }
-
-        /// <summary>
-        /// Spherically interpolates one quaternion to another
-        /// </summary>
-        /// <param name="a">Starting Quaternion</param>
-        /// <param name="b">Ending Quaternion</param>
-        /// <param name="t">fraction of rotation</param>
-        /// <returns></returns>
-        public static Quaternion Slerp2(Quaternion a, Quaternion b, float t)
-        {
-            Quaternion d = b * a.Inverse;
             (float angle, Vector3D axis) = d.AxisAngle();
-            Quaternion dt = new(angle, axis);
-            return dt * a;
+            return new Quaternion(t * angle, axis);
         }
     }
 }

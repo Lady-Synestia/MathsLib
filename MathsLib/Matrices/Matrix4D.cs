@@ -220,6 +220,19 @@ namespace MathsLib
         /// <param name="scale">scale matrix</param>
         /// <returns></returns>
         public static Matrix4D TRS(Matrix4D translation, Matrix4D rotation, Matrix4D scale) => translation * (rotation * scale);
+
+        /// <summary>
+        /// Constructs a Transformation Matrix based on rotation matrix and translation and scale vectors, using a formula I derived
+        /// </summary>
+        /// <param name="translation">3D translation matrix</param>
+        /// <param name="rotation">4D rotation matrix</param>
+        /// <param name="scale">3D scale vector</param>
+        /// <returns></returns>
+        public static Matrix4D TRS(Vector3D translation, Matrix4D rotation, Vector3D scale)
+        {
+            return new Matrix4D(rotation.F * scale.x, rotation.U * scale.y, rotation.R * scale.z, new Vector4D(translation, 1));
+        }
+        
         
         /// <summary>
         /// Assuming the original matrix is a translation matrix, calculates the inverse translation
@@ -240,15 +253,34 @@ namespace MathsLib
             new Vector3D(0, 0, 1 / R.z));
 
         /// <summary>
-        /// Calculates a Transformation Matrix based on provided translation, rotation, and scale matrices.
+        /// Calculates an Inverse Transformation Matrix based on provided inverse translation, inverse rotation, and inverse scale matrices.
         /// Primarily used for Inverse Transformations
         /// order of operations: Translate -> Rotate -> Scale
         /// </summary>
-        /// <param name="scale">scale matrix</param>
-        /// <param name="rotation">rotation matrix</param>
-        /// <param name="translation">translation matrix</param>
+        /// <param name="scale">inverse scale matrix</param>
+        /// <param name="rotation">inverse rotation matrix</param>
+        /// <param name="translation">inverse translation matrix</param>
         /// <returns></returns>
         public static Matrix4D SRT(Matrix4D scale, Matrix4D rotation, Matrix4D translation) => scale * (rotation * translation);
+
+        /// <summary>
+        /// Constructs an Inverse Transformation Matrix based on rotation matrix and translation and scale vectors, using a formula I derived.
+        /// DOES NOT TAKE INVERSE PARAMETERS. 
+        /// </summary>
+        /// <param name="scale">3D scale vector</param>
+        /// <param name="rotation">4D rotation matrix</param>
+        /// <param name="translation">3D translation vector</param>
+        /// <returns></returns>
+        public static Matrix4D SRT(Vector3D scale, Matrix4D rotation, Vector3D translation)
+        {
+            Matrix4D M = new(
+                 new Vector4D(rotation.F, -Vector3D.Dot(rotation.F, translation)) / scale.x, 
+                new Vector4D(rotation.U, -Vector3D.Dot(rotation.U, translation)) / scale.y, 
+                new Vector4D(rotation.R, -Vector3D.Dot(rotation.R, translation)) / scale.z,
+                Vector4D.W
+                 );
+            return M.Transpose;
+        }
 
         /// <summary>
         /// Assuming matrix is a rotation matrix, calculates the rotation as Euler Angles
@@ -257,7 +289,7 @@ namespace MathsLib
         public Vector3D EulerAngles()
         {
             /*
-             * Maths for calculation from: https://www.opengl-tutorial.org/assets/faq_quaternions/index.html#Q37
+             * Maths for calculation from the OpenGL FAQ on Matrices and Quaternions, Question 37 (Various., n.d.)
              */
 
             float angleX;
@@ -317,7 +349,7 @@ namespace MathsLib
         public static Matrix4D Rotation(Vector3D angles)
         {
             /*
-             * Maths for calculation from: https://www.opengl-tutorial.org/assets/faq_quaternions/index.html#Q36
+             * Maths for calculation from the OpenGL FAQ on Matrices and Quaternions, Question 36 (Various., n.d.)
              *
              * Simplified version of Matrix4D.RotationInefficient(Vector3D angles)
              */
@@ -359,7 +391,7 @@ namespace MathsLib
         public static Matrix4D Rotation(Quaternion Q)
         {
             /*
-             * Maths for calculation from: https://www.opengl-tutorial.org/assets/faq_quaternions/index.html#Q54
+             * Maths for calculation from the OpenGL FAQ on Matrices and Quaternions, Question 54 (Various., n.d.)
              */
 
             //quaternion = quaternion.Normalised;
@@ -393,7 +425,7 @@ namespace MathsLib
         public static Matrix4D Rotation(float theta, Vector3D axis)
         {
             /*
-             * Maths for calculation from: https://www.opengl-tutorial.org/assets/faq_quaternions/index.html#Q38
+             * Maths for calculation from the OpenGL FAQ on Matrices and Quaternions, Question 38 (Various., n.d.)
              */
 
             axis = axis.Normalised;
