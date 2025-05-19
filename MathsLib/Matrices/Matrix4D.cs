@@ -164,7 +164,7 @@ namespace MathsLib
         /// Transpose of the Matrix
         /// </summary>
         public Matrix4D Transpose => new(
-            new Vector4D(F.x, U.x, R.x, W.x),
+             new Vector4D(F.x, U.x, R.x, W.x),
             new Vector4D(F.y, U.y, R.y, W.y),
             new Vector4D(F.z, U.z, R.z, W.z),
             new Vector4D(F.w, U.w, R.w, W.w)
@@ -265,7 +265,7 @@ namespace MathsLib
 
         /// <summary>
         /// Constructs an Inverse Transformation Matrix based on rotation matrix and translation and scale vectors, using a formula I derived.
-        /// DOES NOT TAKE INVERSE PARAMETERS. 
+        /// Does not take inverse parameters. 
         /// </summary>
         /// <param name="scale">3D scale vector</param>
         /// <param name="rotation">4D rotation matrix</param>

@@ -10,7 +10,7 @@ namespace MathsLib
         /// <summary>
         /// Tolerance value for equivalence and rounding.
         /// </summary>
-        public const double Tolerance = 0.0001f;
+        public const double Tolerance = 0.000000000001;
 
         /// <summary>
         /// Multiply by to convert to radians, divide by to convert to degrees
