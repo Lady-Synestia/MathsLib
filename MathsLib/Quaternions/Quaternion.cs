@@ -238,7 +238,7 @@ namespace MathsLib
         {
             Quaternion d = b * a.Inverse;
             (double angle, Vector3D axis) = d.AxisAngle();
-            return new Quaternion(t * angle, axis);
+            return new Quaternion(t * angle, axis) * a;
         }
     }
 }
